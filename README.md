@@ -1,54 +1,51 @@
+# Framework Structure
+![image](https://github.com/user-attachments/assets/c04cdd1d-726b-4063-84ff-cb4273f89cae)
 
-# Framework Stracture
+# Directory Structure
+- `features/`: BDD feature files
+- `steps/`: Step implementation files
+- `utils/`: Utility classes and helpers
+- `test_data/`: Test data files
+- `config/`: Configuration files
 
-crypto_exchange_automation/
-├── config/
-│   ├── __init__.py
-│   ├── settings.py
-│   └── test_data.py
-├── features/
-│   ├── steps/
-│   │   ├── __init__.py
-│   │   ├── rest_api_steps.py
-│   │   └── websocket_steps.py
-│   ├── book_subscription.feature
-│   ├── candlestick.feature
-│   └── environment.py
-├── utils/
-│   ├── __init__.py
-│   ├── data_validators.py
-│   ├── rest_client.py
-│   ├── websocket_client.py
-│   └── test_helpers.py
-│── __init__.py
-├── behave.ini
-├── README.md
-└── requirements.txt
 
+# Installation
+
+1. **Clone the repository:**
+   git clone <repository-url.git> /n
+   cd crypto_tasks
+2. **Create virtual environment:**
+   python -m venv venv
+   venv\Scripts\activate
+3. **Install dependencies:**
+   pip install -r requirements.txt
+
+
+# Run Tests (Windows Command Prompt Terminal)
 ## Run all tests
 
-behave
+>### behave
 
 ## Run only smoke tests
 
-behave --tags @smoke
+>### behave --tags @smoke
 
 ## Run only REST API tests
 
-behave --tags @rest
+>### behave --tags @rest
 
 ## Run only WebSocket tests
 
-behave --tags @websocket
+>### behave --tags @websocket
 
 ## Run specific feature
 
-behave features\candlestick
+>### behave features\candlestick
 
 ## Run with JSON format
 
-behave --format json
+>### behave --format json
 
 ## Run negative tests only
 
-behave --tags @negative
+>### behave --tags @negative
