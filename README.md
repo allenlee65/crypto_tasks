@@ -12,7 +12,7 @@
 # Installation
 
 1. **Clone the repository:**  
-   git clone <repository-url.git>  
+   git clone [<repository-url.git>  ](https://github.com/allenlee65/crypto_tasks.git)  
    cd crypto_tasks
 2. **Create virtual environment:**  
    python -m venv venv  
