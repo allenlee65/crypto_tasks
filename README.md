@@ -11,13 +11,13 @@
 
 # Installation
 
-1. **Clone the repository:**
-   git clone <repository-url.git> /n
+1. **Clone the repository:**  
+   git clone <repository-url.git>  
    cd crypto_tasks
-2. **Create virtual environment:**
-   python -m venv venv
+2. **Create virtual environment:**  
+   python -m venv venv  
    venv\Scripts\activate
-3. **Install dependencies:**
+3. **Install dependencies:**  
    pip install -r requirements.txt
 
 
