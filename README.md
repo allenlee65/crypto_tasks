@@ -49,3 +49,9 @@
 ## Run negative tests only
 
 >### behave --tags @negative
+
+# Allure Report
+
+>### pip install allure-behave  
+>### behave -f allure_behave.formatter:AllureFormatter -o reports/allure-report ./features  
+>### allure serve reports/allure-report  
