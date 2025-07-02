@@ -26,3 +26,4 @@ config = Config()
 config.rest_base_url = os.getenv('CRYPTO_REST_URL', config.rest_base_url)
 config.websocket_url = os.getenv('CRYPTO_WS_URL', config.websocket_url)
 config.rest_timeout = int(os.getenv('REST_TIMEOUT', config.rest_timeout))
+

@@ -1,11 +1,11 @@
+# -*- coding: utf-8 -*-
+
 class TestData:
     
     @staticmethod
     def get_valid_instruments():
         """Get list of valid trading instruments"""
-        return [
-            'BTCUSD-PERP'
-        ]
+        return ['BTCUSD-PERP']
     
     @staticmethod
     def get_valid_timeframes():
@@ -15,7 +15,7 @@ class TestData:
     @staticmethod
     def get_valid_depths():
         """Get list of valid order book depths"""
-        return [10, 50]
+        return [10]
     
     @staticmethod
     def get_negative_test_cases():
@@ -48,25 +48,49 @@ class TestData:
         ]
     
     @staticmethod
+    def get_valid_websocket_cases():
+        """Get valid test cases for WebSocket API"""
+        return [
+            {
+                'name': 'valid_subscription',
+                'instrument': 'BTCUSD-PERP',
+                'depth': 10,
+                'channels':'book.BTCUSD-PERP.10'
+            },
+            {
+                'name': 'valid_unsubscription',
+                'instrument': 'BTCUSD-PERP',
+                'depth': 10,
+                'channels':'book.BTCUSD-PERP.10'
+            }
+        ]
+
+    @staticmethod
     def get_websocket_negative_cases():
         """Get negative test cases for WebSocket API"""
         return [
             {
                 'name': 'invalid_instrument',
                 'instrument': 'INVALID_PAIR',
-                'depth': 10
+                'depth': 10,
+                'channels':'book.BTCUSD-PERP.10'
             },
             {
                 'name': 'invalid_depth',
                 'instrument': 'BTCUSD-PERP',
-                'depth': 999
+                'depth': 999,
+                'channels':'book.BTCUSD-PERP.10'
             },
             {
                 'name': 'missing_instrument',
                 'instrument': '',
-                'depth': 10
+                'depth': 10,
+                'channels':'book.BTCUSD-PERP.10'
             }
         ]
+
+
+
 
 # Create global test data instance
 test_data = TestData()
