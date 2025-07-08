@@ -1,6 +1,7 @@
 import time
 import sys
 import os
+from behave import given, when, then
 from config.test_data import TestData
 
 
@@ -27,30 +28,39 @@ def step_verify_connection(context):
 
 @when('I subscribe to order book data with valid instrument "{instrument}" and valid depth "{depth}"')
 def step_subscribe_order_book(context, instrument, depth):
+    instrument = TestData.get_valid_websocket_cases()[0]['instrument']
+    depth = TestData.get_valid_websocket_cases()[0]['depth']
+    
     context.subscription_result = context.ws_client.subscribe_to_book(instrument, depth)
-    context.subscription_result = context.ws_client.subscribe_to_book(
-        "BTCUSD-PERP", 10
-    )
+ 
     time.sleep(1)
-    context.subscribed_instrument = "BTCUSD-PERP",
-    context.subscribed_depth = 10,
-    context.subscribed_channels = "book.BTCUSD-PERP.10"
     
 
 @when('I subscribe to order book with invalid instrument "{instrument}" and valid depth "{depth}"')
 def step_subscribe_invalid_parameters(context, instrument, depth):
+    instrument = TestData.get_websocket_negative_cases()[0]['instrument']
+    depth = TestData.get_websocket_negative_cases()[0]['depth']
     context.subscription_result = context.ws_client.subscribe_to_book(instrument, depth)
-    context.subscription_result = context.ws_client.subscribe_to_book(
-        "Invalid instrument", 10
-    )
+    time.sleep(1)
+
+
+@when('I subscribe to order book with valid instrument "{instrument}" and invalid depth "{depth}"')
+def step_subscribe_valid_instrument_invalid_depth(context, instrument, depth):
+    instrument = TestData.get_valid_websocket_cases()[0]['instrument']
+    depth = TestData.get_websocket_negative_cases()[0]['depth']
+    print("instrument:", instrument, "and depth:", depth, end="|")    
+    context.subscription_result = context.ws_client.subscribe_to_book(instrument, depth)
     time.sleep(1)
 
 @when('I subscribe to order book for instrument "{instrument}" with depth "{depth}"')
 def step_subscribe_to_order_book(context, instrument, depth):
+    """Subscribe to order book data with specified instrument and depth."""
+    
+    instrument = TestData.get_valid_websocket_cases()[0]['instrument']
+    depth = TestData.get_valid_websocket_cases()[1]['depth']
+    
     context.subscription_result = context.ws_client.subscribe_to_book(instrument, depth)
-    context.subscription_result = context.ws_client.subscribe_to_book(
-        "BTCUSD-PERP", 10
-    )
+    
     time.sleep(10)
 
 @then('I should receive subscription confirmation')

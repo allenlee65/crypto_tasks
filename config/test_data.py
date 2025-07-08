@@ -54,8 +54,8 @@ class TestData:
             {
                 'name': 'valid_subscription',
                 'instrument': 'BTCUSD-PERP',
-                'depth': 10,
-                'channels':'book.BTCUSD-PERP.10'
+                'depth': 50,
+                'channels':'book.BTCUSD-PERP.50'
             },
             {
                 'name': 'valid_unsubscription',
