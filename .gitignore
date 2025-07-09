@@ -8,3 +8,10 @@ features/steps/websocket_steps.py
 config/__pycache__/settings.cpython-313.pyc
 config/__pycache__/test_data.cpython-313.pyc
 *.pyc
+config/__pycache__/__init__.cpython-313.pyc
+config/__pycache__/settings.cpython-313.pyc
+config/__pycache__/test_data.cpython-313.pyc
+utils/__pycache__/__init__.cpython-313.pyc
+utils/__pycache__/data_validators.cpython-313.pyc
+utils/__pycache__/rest_client.cpython-313.pyc
+utils/__pycache__/websocket_client.cpython-313.pyc
