@@ -1,6 +1,6 @@
 reports/
-.vscode/settings.json
-*.__pycache__/
+.vscode/
+*__pycache__*
 allure-results/
 allure-report/
 .venv/
