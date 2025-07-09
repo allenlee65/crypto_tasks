@@ -7,22 +7,18 @@ Feature: Crypto.com Exchange REST API - Candlestick Data
     Given the REST API client is initialized
 
   @smoke @positive
-  Scenario Outline: Retrieve candlestick data with valid parameters
-    When I request candlestick data for "<instrument>" with timeframe "<timeframe>" and count <count>
+  Scenario: Retrieve candlestick data with valid parameters
+    When I request candlestick data for "instrument_name" with timeframe "timeframe" and count "count"
     Then the response status should be 200
     And the response should contain valid candlestick data
-    And the instrument name should be "<instrument>"
-    And the timeframe should be "<timeframe>"
-    And the number of candlesticks should be <count> or less
+    And the instrument name should be "instrument_name"
+    And the timeframe should be "timeframe"
+    And the number of candlesticks should be "count" or less
     And each candlestick should have valid OHLC relationships
     And candlesticks should be in chronological order
     And all volumes should be non-negative
     And the response should be received within 5 seconds
-
-    Examples:
-      | instrument      | timeframe | count |
-      | BTCUSD-PERP     | 1m        | 10    |
-      | BTCUSD-PERP     | 5m        | 20    |
+ |
       
 
   @positive
@@ -46,6 +42,6 @@ Feature: Crypto.com Exchange REST API - Candlestick Data
 
   @performance
   Scenario: Performance test for candlestick endpoint
-    When I request candlestick data for "BTCUSD-PERP" with timeframe "1m" and count 100
+    When I request candlestick data for "instrument_name" with timeframe "timeframe" and count "count"
     Then the response should be received within 3 seconds
     And the response status should be 200

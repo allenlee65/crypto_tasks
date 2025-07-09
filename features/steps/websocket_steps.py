@@ -32,16 +32,34 @@ def step_subscribe_order_book(context, instrument, depth):
     depth = TestData.get_valid_websocket_cases()[0]['depth']
     
     context.subscription_result = context.ws_client.subscribe_to_book(instrument, depth)
- 
+
     time.sleep(1)
-    
+
+@when('I subscribe to order book.update with valid "{channels}" and "{book_subscription_type}" and "{book_update_frequency}"')
+def step_subscribe_valid_parameters(context, channels, book_subscription_type, book_update_frequency):
+    channels = TestData.get_valid_websocket_book_update_cases()[0]['channels']
+    book_subscription_type = TestData.get_valid_websocket_book_update_cases()[0]['book_subscription_type']
+    book_update_frequency = TestData.get_valid_websocket_book_update_cases()[0]['book_update_frequency']
+    print("channels:", channels, "book_subscription_type:", book_subscription_type, "book_update_frequency:", book_update_frequency, end="|")
+    # Subscribe to book updates with valid parameters
+    if not context.ws_client.connected:
+        context.ws_client.connect()
+    assert context.ws_client.connected, "WebSocket client not connected"
+    print("Subscribing to book updates with channels:", channels, "book_subscription_type:", book_subscription_type, "book_update_frequency:", book_update_frequency)
+    #context.subscription_result = context.ws_client.subscribe_to_book_update(channels, book_subscription_type, book_update_frequency)
+    # For testing purposes, we can use a fixed subscription
+    context.subscription_result = context.ws_client.subscribe_to_book_update(channels, book_subscription_type, book_update_frequency)
+
+    time.sleep(1)
 
 @when('I subscribe to order book with invalid instrument "{instrument}" and valid depth "{depth}"')
-def step_subscribe_invalid_parameters(context, instrument, depth):
+def step_subscribe_invalid_instrument_valid_depth(context, instrument, depth):
     instrument = TestData.get_websocket_negative_cases()[0]['instrument']
-    depth = TestData.get_websocket_negative_cases()[0]['depth']
+    depth = TestData.get_valid_websocket_cases()[0]['depth']
+    print("instrument:", instrument, "and depth:", depth, end="|")    
     context.subscription_result = context.ws_client.subscribe_to_book(instrument, depth)
     time.sleep(1)
+
 
 
 @when('I subscribe to order book with valid instrument "{instrument}" and invalid depth "{depth}"')

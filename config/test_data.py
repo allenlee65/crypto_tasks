@@ -16,7 +16,25 @@ class TestData:
     def get_valid_depths():
         """Get list of valid order book depths"""
         return [10]
-    
+
+    @staticmethod
+    def get_possitive_test_cases():
+        """Get possitive test cases for REST API"""
+        return [
+            {
+                'name': 'valid_instrument',
+                'instrument_name': 'BTCUSD-PERP',
+                'timeframe': '1m',
+                'count': 10
+            },
+            {
+                'name': 'valid_instrument',
+                'instrument_name': 'BTCUSD-PERP',
+                'timeframe': '5m',
+                'count': 20
+            }
+        ]
+
     @staticmethod
     def get_negative_test_cases():
         """Get negative test cases for REST API"""
@@ -63,6 +81,24 @@ class TestData:
                 'depth': 10,
                 'channels':'book.BTCUSD-PERP.10'
             }
+        ]
+    
+    @staticmethod
+    def get_valid_websocket_book_update_cases():
+        """Get valid test cases for WebSocket API"""
+        return [
+            {
+                'name': 'valid_subscription_with_book_update_10',
+                'channels': 'book.BTCUSD-PERP.10',
+                'book_subscription_type': 'SNAPSHOT_AND_UPDATE',
+                'book_update_frequency': 10
+            },
+            {
+                'name': 'valid_subscription_with_book_update_500',
+                'channels': 'book.BTCUSD-PERP.10',
+                'book_subscription_type': 'SNAPSHOT_AND_UPDATE',
+                'book_update_frequency': 500
+            },
         ]
 
     @staticmethod

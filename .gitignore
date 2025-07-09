@@ -4,3 +4,7 @@ reports/
 allure-results/
 allure-report/
 .venv/
+features/steps/websocket_steps.py
+config/__pycache__/settings.cpython-313.pyc
+config/__pycache__/test_data.cpython-313.pyc
+*.pyc

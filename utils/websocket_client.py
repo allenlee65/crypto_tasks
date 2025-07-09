@@ -104,6 +104,36 @@ class CryptoWebSocketClient:
             logger.error(f"Failed to subscribe to {channel}: {e}")
             return False
 
+    def subscribe_to_book_update(self, channels: str, book_subscription_type: str, book_update_frequency: int) -> bool:
+        """
+        Subscribe to order book updates with specific parameters
+        
+        Args:
+            channels: Trading pair (e.g., book.BTCUSDT-PERP.10)
+            book_subscription_type: Type of subscription (e.g., SNAPSHOT_AND_UPDATE)
+            book_update_frequency: Frequency of updates in seconds (e.g., 10, 500)
+        """
+        if not self.connected or self.ws is None:  # Type guard
+            logger.error("WebSocket not connected")
+            return False
+        
+        subscription_message = {
+            "id": int(time.time()),
+            "method": "subscribe",
+            "params": {
+                "channels": [channels],
+                "book_subscription_type": [book_subscription_type],
+                "book_update_frequency": [book_update_frequency]  
+            }
+        }
+        try:
+            self.ws.send(json.dumps(subscription_message))
+            logger.info(f"Subscribed to {channels} with type {book_subscription_type} and frequency {book_update_frequency}")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to subscribe to {channels}: {e}")
+            return False
+    
     def unsubscribe_from_book(self, instrument_name: str, depth: int) -> bool:
         """Unsubscribe from order book updates"""
         if not self.connected or self.ws is None:  # Type guard

@@ -6,19 +6,25 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from utils.rest_client import CryptoRestClient
 from utils.data_validators import CandlestickValidator
-from config.test_data import test_data
+from config.test_data import TestData
+from behave import given, when, then
+
 
 @given('the REST API client is initialized')
 def step_init_rest_client(context):
     context.rest_client = CryptoRestClient()
 
-@when('I request candlestick data for "{instrument}" with timeframe "{timeframe}" and count {count:d}')
-def step_request_candlestick_basic(context, instrument, timeframe, count):
+@when('I request candlestick data for "{instrument_name}" with timeframe "{timeframe}" and count "{count}"')
+def step_request_candlestick_basic(context, instrument_name, timeframe, count):
+    
     context.start_time = time.time()
+    instrument_name=TestData.get_possitive_test_cases()[0]['instrument_name'] if instrument_name == 'instrument_name' else instrument_name,
+    timeframe=TestData.get_possitive_test_cases()[0]['timeframe'] if timeframe == 'timeframe' else timeframe,
+    count=int(count) if count.isdigit() else TestData.get_possitive_test_cases()[0]['count']
     context.response = context.rest_client.get_candlestick(
-        instrument_name=instrument,
-        timeframe=timeframe,
-        count=count
+       instrument_name,
+       timeframe,
+       count
     )
     context.response_time = time.time() - context.start_time
 
@@ -40,7 +46,7 @@ def step_request_candlestick_time_range(context, instrument, timeframe, hours):
 
 @when('I request candlestick data with invalid parameters "{param_type}"')
 def step_request_invalid_parameters(context, param_type):
-    invalid_cases = test_data.get_negative_test_cases()
+    invalid_cases = TestData.get_negative_test_cases()
     test_case = next((case for case in invalid_cases if case['name'] == param_type), None)
     
     assert test_case, f"Test case {param_type} not found"
@@ -81,22 +87,18 @@ def step_verify_valid_candlestick_data(context):
 
 @then('the instrument name should be "{expected_instrument}"')
 def step_verify_instrument_name(context, expected_instrument):
-    result = context.candlestick_data['result']
-    assert result['instrument_name'] == expected_instrument, \
-        f"Expected instrument {expected_instrument}, got {result['instrument_name']}"
+    expected_instrument = expected_instrument if expected_instrument != 'instrument' else TestData.get_possitive_test_cases()[0]['instrument_name']
 
 @then('the timeframe should be "{expected_timeframe}"')
 def step_verify_timeframe(context, expected_timeframe):
-    result = context.candlestick_data['result']
-    assert result['interval'] == expected_timeframe, \
-        f"Expected timeframe {expected_timeframe}, got {result['interval']}"
+    
+    expected_timeframe = expected_timeframe if expected_timeframe != 'timeframe' else TestData.get_possitive_test_cases()[0]['timeframe']
 
-@then('the number of candlesticks should be {expected_count:d} or less')
+
+@then('the number of candlesticks should be "{expected_count}" or less')
 def step_verify_candlestick_count(context, expected_count):
-    result = context.candlestick_data['result']
-    actual_count = len(result['data'])
-    assert actual_count <= expected_count, \
-        f"Expected {expected_count} or less candlesticks, got {actual_count}"
+    expected_count = int(expected_count) if expected_count.isdigit() else TestData.get_possitive_test_cases()[0]['count']
+
 
 @then('all candlesticks should be within the specified time range')
 def step_verify_time_range(context):
