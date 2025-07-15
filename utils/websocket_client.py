@@ -174,12 +174,12 @@ class CryptoWebSocketClient:
         """Clear the received messages buffer"""
         self.received_messages.clear()
 
-    def _on_open(self, ws: websocket.WebSocketApp) -> None:
+    def _on_open(self, ws: websocket.WebSocket) -> None:
         """Called when WebSocket connection is opened"""
         self.connected = True
         logger.info("WebSocket connection opened")
 
-    def _on_message(self, ws: websocket.WebSocketApp, message: str) -> None:
+    def _on_message(self, ws: websocket.WebSocket, message: str) -> None:
         """Called when message is received"""
         try:
             data = json.loads(message)
@@ -196,12 +196,12 @@ class CryptoWebSocketClient:
         except json.JSONDecodeError as e:
             logger.error(f"Failed to parse message: {e}")
 
-    def _on_error(self, ws: websocket.WebSocketApp, error: Union[str, Exception]) -> None:
+    def _on_error(self, ws: websocket.WebSocket, error: Union[str, Exception]) -> None:
         """Called when WebSocket error occurs"""
         self.connection_error = str(error)
         logger.error(f"WebSocket error: {error}")
 
-    def _on_close(self, ws: websocket.WebSocketApp, close_status_code: Optional[int], close_msg: Optional[str]) -> None:
+    def _on_close(self, ws: websocket.WebSocket, close_status_code: Optional[int], close_msg: Optional[str]) -> None:
         """Called when WebSocket connection is closed"""
         self.connected = False
         logger.info(f"WebSocket connection closed: {close_status_code} - {close_msg}")

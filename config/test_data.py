@@ -10,12 +10,12 @@ class TestData:
     @staticmethod
     def get_valid_timeframes():
         """Get list of valid timeframes"""
-        return ['1m', '5m', '15m']
+        return ['M1','M5','M15','M30' 'H1','H2','H4','H12','D1','7D','14D','1M']
     
     @staticmethod
     def get_valid_depths():
         """Get list of valid order book depths"""
-        return [10]
+        return [10,50]
 
     @staticmethod
     def get_possitive_test_cases():
@@ -24,14 +24,14 @@ class TestData:
             {
                 'name': 'valid_instrument',
                 'instrument_name': 'BTCUSD-PERP',
-                'timeframe': '1m',
+                'timeframe': 'M1',
                 'count': 10
             },
             {
                 'name': 'valid_instrument',
                 'instrument_name': 'BTCUSD-PERP',
-                'timeframe': '5m',
-                'count': 20
+                'timeframe': 'M5',
+                'count': 25
             }
         ]
 
@@ -41,26 +41,25 @@ class TestData:
         return [
             {
                 'name': 'invalid_instrument',
-                'instrument_name': 'INVALID_PAIR',
-                'timeframe': '1h',
-                'count': 10
+                'instrument_name': 'BTCBTC-INVALID',
+                'timeframe': 'H1'
             },
             {
                 'name': 'invalid_timeframe',
                 'instrument_name': 'BTCUSD-PERP',
-                'timeframe': 'invalid',
+                'timeframe': 'M99',
                 'count': 10
             },
             {
                 'name': 'excessive_count',
                 'instrument_name': 'BTCUSD-PERP',
-                'timeframe': '1h',
-                'count': 1000
+                'timeframe': 'M1',
+                'count': -99
             },
             {
                 'name': 'invalid_timestamp',
                 'instrument_name': 'BTCUSD-PERP',
-                'timeframe': '1h',
+                'timeframe': 'M1',
                 'start_ts': -1
             }
         ]
@@ -107,21 +106,21 @@ class TestData:
         return [
             {
                 'name': 'invalid_instrument',
-                'instrument': 'INVALID_PAIR',
+                'instrument': 'BTCBTC-INVALID',
                 'depth': 10,
-                'channels':'book.BTCUSD-PERP.10'
+                'channels':'book.BTCBTC-INVALID.10'
             },
             {
                 'name': 'invalid_depth',
                 'instrument': 'BTCUSD-PERP',
                 'depth': 999,
-                'channels':'book.BTCUSD-PERP.10'
+                'channels':'book.BTCUSD-PERP.999'
             },
             {
                 'name': 'missing_instrument',
                 'instrument': '',
                 'depth': 10,
-                'channels':'book.BTCUSD-PERP.10'
+                'channels':'book. .10'
             }
         ]
 

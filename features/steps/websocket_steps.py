@@ -30,7 +30,7 @@ def step_verify_connection(context):
 def step_subscribe_order_book(context, instrument, depth):
     instrument = TestData.get_valid_websocket_cases()[0]['instrument']
     depth = TestData.get_valid_websocket_cases()[0]['depth']
-    
+    print("instrument:", instrument, "and depth:", depth, end="|")
     context.subscription_result = context.ws_client.subscribe_to_book(instrument, depth)
 
     time.sleep(1)
