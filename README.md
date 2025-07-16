@@ -56,3 +56,5 @@
 >### behave -f allure_behave.formatter:AllureFormatter -o reports/allure-report ./features  
 >### allure serve reports/allure-report
 
+<img width="1917" height="930" alt="Screenshot From 2025-07-16 17-47-41" src="https://github.com/user-attachments/assets/439d8cf5-5331-4c3c-a0a2-3e072c32faa2" />
+
