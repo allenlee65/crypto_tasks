@@ -13,6 +13,20 @@ def step_when_send_get_request(context, category, product_type):
     if product_type:
         params['product_type'] = product_type
     context.response = requests.get(context.endpoint, params=params)
+            
+@when('I test all combinations of category and product_type')
+def step_when_test_all_combinations(context):
+    categories = ['list', 'delist', 'event', 'product', 'system']
+    product_types = ['Spot', 'Derivative', 'OTC', 'Staking', 'TradingArena']
+    for category in categories:
+        for product_type in product_types:
+            params = {
+                'category': category,
+                'product_type': product_type
+            }
+            context.response = requests.get(context.endpoint, params=params)
+            assert context.response.status_code == 200, f"Failed with {category}, {product_type}: status {context.response.status_code}"
+
 
 @then('the response status code should be 200')
 def step_then_status_code_200(context):
@@ -31,3 +45,18 @@ def step_then_check_required_fields(context):
     for announcement in announcements:
         for field in required_fields:
             assert field in announcement, f"Field '{field}' missing in announcement"
+
+
+@then('the response should indicate rejection or empty result')
+def step_response_reject_or_empty(context):
+    resp_json = context.response.json()
+    # Adjust assertions to system behavior—either error code or empty data
+    assert context.response.status_code in [200, 400, 422], "Unexpected status code"
+    if context.response.status_code == 200:
+        # Expect 'data' to be empty for unknown filters
+        data = resp_json.get('result', {}).get('data', None)
+        assert data == [] or data is None, "Expected empty result for invalid params"
+    else:
+        # Alternatively, expect error message or code in error responses
+        assert 'code' in resp_json and resp_json['code'] != 0, "No error code for invalid params"
+
