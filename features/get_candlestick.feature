@@ -9,9 +9,16 @@ Scenario Outline: Get candlestick data for all instrument and timeframe combinat
 Examples:
   | instrument     | timeframe |
   | BTCUSD-PERP    | M1        |
-  | BTCUSD-PERP    | M1        |
   | BTCUSD-PERP    | M5        |
-  | BTCUSD-PERP    | M5        |
-  | ETHUSD-PERP    | M15       |
-  | ETHUSD-PERP    | M1        |
-
+  | BTCUSD-PERP    | M15       |
+  | BTCUSD-PERP    | M30       |
+  | ETHUSD-PERP    | H1        |
+  | ETHUSD-PERP    | H2        |
+  | ETHUSD-PERP    | H1        |
+  | ETHUSD-PERP    | H2        |
+  | ETHUSD-PERP    | H4        |
+  | ETHUSD-PERP    | H12       |
+  | ETHUSD-PERP    | D1        |
+  | ETHUSD-PERP    | 7D        |
+  | ETHUSD-PERP    | 14D       |
+  | ETHUSD-PERP    | 1M        |

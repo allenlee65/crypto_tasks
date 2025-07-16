@@ -26,3 +26,4 @@ def step_then_response_code(context):
 def step_then_response_data(context):
     result = context.response.get("result", {})
     assert "data" in result and len(result["data"]) > 0, "No candlestick data found in response"
+

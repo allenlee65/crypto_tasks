@@ -19,7 +19,7 @@ Feature: Crypto.com Exchange WebSocket API - Order Book Data
     When I connect to the WebSocket server
     Then the connection should be established successfully
     When I subscribe to order book.update with valid "channels" and "book_subscription_type" and "book_update_frequency"
-    THen I should receive subscription confirmation
+    Then I should receive subscription confirmation
   
   @negative
   Scenario: Handle invalid subscription instrument and valid depth
