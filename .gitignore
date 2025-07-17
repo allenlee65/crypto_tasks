@@ -6,3 +6,4 @@ allure-report/
 .venv/
 *.pyc
 __pycache__/
+requirements1.txt

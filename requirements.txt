@@ -1,6 +1,9 @@
 behave==1.2.6
 requests==2.31.0
-websocket-client==1.6.1
+websocket-client==1.8.0
+websockets==15.0.1
 allure-behave==2.13.2
 pytest>=8.0.0
 pytest-httpx>=0.35.0
+allure-pytest==2.14.3
+allure-python-commons==2.14.3
