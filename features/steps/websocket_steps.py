@@ -168,3 +168,22 @@ def step_verify_continuous_updates(context):
     final_count = len(context.ws_client.get_received_messages())
     
     assert final_count > initial_count, "No continuous updates received"
+
+@given('the websocket connection is lost')
+def step_given(context):
+    print("Simulating WebSocket connection loss...")
+    # Simulate connection loss by disconnecting the client
+    context.ws_client.disconnect()
+
+
+@when('the system attempts to reconnect')
+def step_when(context):
+    time.sleep(5)
+    print("Attempting to reconnect WebSocket...")
+    context.connection_result = context.ws_client.connect() 
+
+@then('the WebSocket should be reconnected successfully')
+def step_then(context):
+    assert context.connection_result, "Failed to reconnect WebSocket"
+    assert context.ws_client.connected, "WebSocket client not in connected state after reconnection"
+    print("WebSocket reconnected successfully")
