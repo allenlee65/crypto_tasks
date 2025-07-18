@@ -5,5 +5,7 @@ websockets==15.0.1
 allure-behave==2.13.2
 pytest>=8.0.0
 pytest-httpx>=0.35.0
-allure-pytest==2.14.3
-allure-python-commons==2.14.3
+allure-pytest==2.13.2
+allure-python-commons==2.13.2
+jsonschema==4.24.0
+jsonschema-specifications==2025.4.1
