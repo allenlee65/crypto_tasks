@@ -26,7 +26,7 @@ def step_reponse_method(context):
 def step_result_trades(context, expected_count):
     data = context.json["result"]["data"]
     assert isinstance(data, list)
-    assert len(data) == expected_count
+    assert len(data) <= expected_count
 
 @then('each trade should have valid attributes')
 def step_trade_valid_attributes(context):

@@ -41,7 +41,10 @@ def step_then_response_contains_list(context):
 @then('each announcement should have required fields')
 def step_then_check_required_fields(context):
     required_fields = ['id', 'category', 'product_type', 'announced_at', 'title', 'content']
-    announcements = context.response.json()['result']['data']
+    json_response = context.response.json()
+    assert 'result' in json_response and 'data' in json_response['result'], "Response JSON does not contain 'result.data'"
+    announcements = json_response['result']['data']
+    assert isinstance(announcements, list), "'result.data' is not a list"
     for announcement in announcements:
         for field in required_fields:
             assert field in announcement, f"Field '{field}' missing in announcement"

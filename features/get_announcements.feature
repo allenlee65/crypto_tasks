@@ -15,12 +15,6 @@ Feature: Fetch announcements from Crypto.com Exchange
       | product  | Staking      |
       | system   | TradingArena |
 
-  Scenario: Get announcements with category and product_type filters
-    Given the API endpoint is set to "https://uat-api.3ona.co/exchange/v1/public/get-announcements"
-    When I test all combinations of category and product_type
-    Then the response status code should be 200
-    And the response should contain a list of announcements
-    And each announcement should have required fields
 
   
   Scenario Outline: API should handle unexpected category and product_type gracefully

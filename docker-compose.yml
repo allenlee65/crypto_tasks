@@ -1,0 +1,115 @@
+version: '3.8'
+
+services:
+  crypto-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crypto-tasks-runner
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Mount reports directory to persist test results
+      - ./reports:/app/reports
+      # Mount test data directory if you need to modify test data
+      - ./test_data:/app/test_data
+      # Mount config directory for runtime configuration changes
+      - ./config:/app/config
+    networks:
+      - crypto-test-network
+    command: ["behave"]
+    profiles:
+      - default
+
+  # Service for running smoke tests only
+  crypto-smoke-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crypto-smoke-runner
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./reports:/app/reports
+    networks:
+      - crypto-test-network
+    command: ["behave", "--tags", "@smoke"]
+    profiles:
+      - smoke
+
+  # Service for running REST API tests
+  crypto-rest-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crypto-rest-runner
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./reports:/app/reports
+    networks:
+      - crypto-test-network
+    command: ["behave", "--tags", "@rest"]
+    profiles:
+      - rest
+
+  # Service for running WebSocket tests
+  crypto-websocket-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crypto-websocket-runner
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./reports:/app/reports
+    networks:
+      - crypto-test-network
+    command: ["behave", "--tags", "@websocket"]
+    profiles:
+      - websocket
+
+  # Service for generating Allure reports
+  allure-reports:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crypto-allure-generator
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./reports:/app/reports
+    networks:
+      - crypto-test-network
+    command: ["behave", "-f", "allure_behave.formatter:AllureFormatter", "-o", "reports/allure-report", "./features"]
+    profiles:
+      - allure
+
+  # Allure server for viewing reports (optional)
+  allure-server:
+    image: frankescobar/allure-docker-service
+    container_name: crypto-allure-server
+    environment:
+      - CHECK_RESULTS_EVERY_SECONDS=3
+      - KEEP_HISTORY=1
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./reports/allure-report:/app/allure-results
+    networks:
+      - crypto-test-network
+    profiles:
+      - allure-server
+
+networks:
+  crypto-test-network:
+    driver: bridge
+
+volumes:
+  reports:
+    driver: local
